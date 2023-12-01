@@ -1,0 +1,25 @@
+<body>
+    <turbo-frame id="entries">
+        <form action="/add" method="post">
+            <div class="mb-3">
+                <textarea class="form-control" name="entry" rows="3" placeholder="Write about your day"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+
+        <div id="list" class="mt-4">
+            {{range .Entries}}
+            <target-frame id="entry-{{.ID}}">
+                <div class="position-relative entry">
+                    <div class="small mb-1 text-secondary">{{.Date}}</div>
+                    <p>{{.Content}}</p>
+                    <form action="/remove" method="post" class="position-absolute close-entry">
+                        <button type="submit" class="btn-close small" aria-label="Close"></button>
+                        <input type="hidden" name="id" value="{{.ID}}">
+                    </form>
+                </div>
+            </target-frame>
+            {{end}}
+        </div>
+    </turbo-frame>
+</body>

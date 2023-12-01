@@ -1,0 +1,21 @@
+<body>
+    <turbo-frame id="summary">
+        <div class="mb-3">
+            <form action="/summary">
+                <button type="submit" class="btn btn-primary">Get a summary</button>
+            </form>
+        </div>
+
+        <p class="lead">Summary</p>
+        <p>{{.Summary}}</p>
+        
+        <turbo-frame id="image">
+        <div class="mt-3">
+            <form action="/image" method="post" data-turbo-frame="image">
+                <button type="submit" class="btn btn-primary">Generate an inspired image</button>
+                <input type="hidden" name="summary" value="{{.Summary}}">
+            </form>
+        </div>
+        </turbo-frame>
+    </turbo-frame>
+</body>

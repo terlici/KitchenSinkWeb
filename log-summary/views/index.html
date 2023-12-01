@@ -1,0 +1,70 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Summary</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <style>
+        .close-entry {
+            top: 0;
+            right: 0.5rem;
+            display: none;
+        }
+
+        .entry:hover .close-entry {
+            display: block;
+        }
+    </style>
+
+    <script type="module">
+        import {} from "https://unpkg.com/@hotwired/turbo@8.0.0-beta.1/dist/turbo.es2017-esm.js"
+    </script>
+</head>
+<body>
+    <div class="container-lg mt-5 mb-5">
+        <div class="row mb-3">
+            <div class="col">
+                <h1 class="display-3">Welcome to Daily Summary</h1>
+                <p class="lead">Write about your they and will summarize it for you</p>
+            </div>
+        </div>
+        <div class="row gx-5">
+            <div class="col-md">
+                <turbo-frame id="entries">
+                    <form action="/add" method="post">
+                        <div class="mb-3">
+                            <textarea class="form-control" name="entry" rows="3" placeholder="Write about your day"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </form>
+
+                    <div id="list" class="mt-4">
+                        {{range .Entries}}
+                        <div class="position-relative entry">
+                            <div class="small mb-1 text-secondary">{{.Date}}</div>
+                            <p>{{.Content}}</p>
+                            <form action="/remove" method="post" class="position-absolute close-entry">
+                                <button type="submit" class="btn-close small" aria-label="Close"></button>
+                                <input type="hidden" name="id" value="{{.ID}}">
+                            </form>
+                        </div>
+                        {{end}}
+                    </div>
+                </turbo-frame>
+            </div>
+            <div class="col-md">
+                <turbo-frame id="summary">
+                    <div class="mb-3">
+                        <form action="/summary">
+                            <button type="submit" class="btn btn-primary">Get a summary</button>
+                        </form>
+                    </div>
+                </turbo-frame>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
